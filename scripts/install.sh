@@ -59,6 +59,20 @@ case "$ARCH" in
 esac
 [ -f /etc/openwrt_release ] || die "OpenWrt required"
 
+# --- conflict check: another transparent proxy already here? ---
+# ProxyBox and Open-Box would fight over the panel port, the tun default
+# route, clash_api and DNS. Refuse to install alongside a RUNNING instance.
+if [ -x /etc/init.d/openbox ] && /etc/init.d/openbox running 2>/dev/null; then
+  die "Open-Box core is running on this machine. Installing ProxyBox alongside it would break networking (port 3036, tun routes, DNS). Stop and disable Open-Box first if you want to replace it -- or better, test ProxyBox on a separate machine/VM."
+fi
+if [ -x /etc/init.d/openbox-panel ] && /etc/init.d/openbox-panel running 2>/dev/null; then
+  die "Open-Box panel is running on this machine (port 3036). Stop it first, or install ProxyBox with --port <free-port> on a test machine."
+fi
+if ss -ltn 2>/dev/null | grep -q ":$PORT "; then
+  die "port $PORT is already in use on this machine. Re-run with --port <free-port>."
+fi
+[ -d /opt/open-box ] && info "NOTE: /opt/open-box exists but is stopped; continuing."
+
 # --- fetch tarball ---
 case "$TARBALL" in
   http://*|https://*) info "downloading $TARBALL"; wget -O /tmp/proxybox.tar.gz "$TARBALL" || die "download failed"; TARBALL=/tmp/proxybox.tar.gz ;;

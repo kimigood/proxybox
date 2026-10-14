@@ -75,6 +75,7 @@ async function serviceRunning(script) {
 /** Detect conflicting proxy services (openclash / nikki / passwall / ...). */
 export async function detectConflicts() {
   const candidates = [
+    { id: 'openbox', label: 'Open-Box', script: '/etc/init.d/openbox' },
     { id: 'openclash', label: 'OpenClash', script: '/etc/init.d/openclash' },
     { id: 'nikki', label: 'Nikki', script: '/etc/init.d/nikki' },
     { id: 'passwall', label: 'PassWall', script: '/etc/init.d/passwall' },
