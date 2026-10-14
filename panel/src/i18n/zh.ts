@@ -1,11 +1,11 @@
 import type { LANG_MESSAGE } from './en'
 
 const zh: LANG_MESSAGE = {
-  overview: '概览',
-  proxies: '代理',
-  rules: '规则',
-  connections: '连接',
-  logs: '日志',
+  overview: '📊 概览',
+  proxies: '🌐 代理',
+  rules: '📏 规则',
+  connections: '🔗 连接',
+  logs: '📝 日志',
   host: '主机',
   port: '端口',
   password: '密码',
@@ -47,7 +47,7 @@ const zh: LANG_MESSAGE = {
   ul: '上传',
   dlSpeed: '下载速度',
   ulSpeed: '上传速度',
-  settings: '设置',
+  settings: '⚙️ 设置',
   speedtestUrl: '测速地址',
   speedtestTimeout: '测速超时',
   connectionStyle: '连接样式',
@@ -605,6 +605,20 @@ const zh: LANG_MESSAGE = {
   penetrationChainHop: '\u7ecf\u7531',
   penetrationChainError: '\u6ca1\u80fd\u7ee7\u7eed\u89e3\u6790:{message}',
   penetrationMatchError: '\u6ca1\u80fd\u786e\u5b9a\u662f\u5426\u547d\u4e2d\u89c4\u5219:{message}',
+  speedTest: '\u6d4b\u901f',
+  autoSpeedTest: '\u6253\u5f00\u9762\u677f\u81ea\u52a8\u6d4b\u901f',
+  retest: '\u91cd\u65b0\u6d4b\u901f',
+  notTested: '\u672a\u6d4b\u901f',
+  trafficInsight: '\u6d41\u91cf\u6d1e\u5bdf',
+  trafficInsightHint: '\u70b9\u51fb\u67d0\u5929\u67e5\u770b\u5f53\u5929\u8be6\u60c5',
+  trafficInsightSummary: '{month}\u5171{total}\uff0c{conns}\u4e2a\u8fde\u63a5',
+  avgPerDay: '\u65e5\u5747',
+  running: '\u8fd0\u884c\u4e2d',
+  notConnected: '\u672a\u8fde\u63a5',
+  loading: '\u52a0\u8f7d\u4e2d\u2026',
+  speedTestSites: '\u6d4b\u8bd5\u7ad9\u70b9',
+  siteName: '\u540d\u79f0',
+  addSite: '\u6dfb\u52a0\u7ad9\u70b9',
 }
 
 export default zh

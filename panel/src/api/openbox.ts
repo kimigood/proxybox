@@ -466,6 +466,26 @@ export const emergencyRollback = async (): Promise<OpenboxRollbackResult> => {
   return requestJson<OpenboxRollbackResult>('/api/openbox/rollback', { method: 'POST' })
 }
 
+export interface TrafficDay {
+  day: string
+  up: number
+  down: number
+  conns: number
+}
+
+export interface TrafficMonth {
+  month: string
+  days: TrafficDay[]
+  totalUp: number
+  totalDown: number
+  totalConns: number
+  avgPerDay: number
+}
+
+export const fetchTrafficMonth = async (month: string): Promise<TrafficMonth> => {
+  return requestJson<TrafficMonth>(`/api/openbox/traffic?month=${encodeURIComponent(month)}`)
+}
+
 // Mirrors server/api/penetration.mjs's PENETRATION_TARGET_PATTERN — used client-side purely so
 // the UI can reject an obviously flag-like target (e.g. "--help") before it round-trips to the
 // server; the server's own check is still the actual authority.
