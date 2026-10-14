@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+panel/node_modules/
+server/node_modules/
+
+# build outputs
+dist/
+panel/dist/
+
+# runtime data (never commit)
+data/
+*.db
+*.log
+
+# OS / editor
+.DS_Store
+
+# binary panel assets (restored from .b64 by scripts/restore-assets.sh)
+panel/src/assets/NotoColorEmoji-flagsonly.ttf
+panel/src/assets/TwemojiMozilla-flags.woff2
+panel/src/assets/metacubex.jpg
+
+# local test binaries
+build/

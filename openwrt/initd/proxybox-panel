@@ -1,0 +1,26 @@
+#!/bin/sh /etc/rc.common
+# ProxyBox panel service: Node.js backend + web UI.
+START=96
+STOP=9
+USE_PROCD=1
+
+ROOT=/opt/proxybox
+NODE_BIN="$ROOT/node/bin/node"
+[ -x "$NODE_BIN" ] || NODE_BIN="$(command -v node)"
+
+start_service() {
+  [ -n "$NODE_BIN" ] || { echo "node not found" >&2; return 1; }
+  local port="3036"
+  [ -f "$ROOT/data/panel-port" ] && port="$(cat "$ROOT/data/panel-port")"
+  procd_open_instance
+  procd_set_param command "$NODE_BIN" "$ROOT/server/index.mjs"
+  procd_set_param env "PROXYBOX_ROOT=$ROOT" "PROXYBOX_PORT=$port"
+  procd_set_param respawn 3600 5 0
+  procd_set_param stdout 1
+  procd_set_param stderr 1
+  procd_close_instance
+}
+
+running() {
+  pgrep -f "server/index.mjs" >/dev/null 2>&1
+}

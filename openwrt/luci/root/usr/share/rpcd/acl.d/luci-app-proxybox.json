@@ -1,0 +1,1 @@
+{"luci-app-proxybox":{"description":"ProxyBox emergency controls","read":{},"write":{"file":{"/etc/init.d/proxybox-core":["exec"],"/etc/init.d/proxybox-panel":["exec"]}}}}
