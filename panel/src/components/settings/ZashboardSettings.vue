@@ -14,7 +14,7 @@
           <span class="bg-secondary h-2 w-2 rounded-full"></span>
         </span>
         <span class="flex flex-wrap items-center gap-x-3 gap-y-1 sm:flex-nowrap">
-          <span>Open-Box</span>
+          <span>ProxyBox</span>
           <span class="text-sm font-normal">{{ displayVersion }}</span>
           <span class="text-base-content/70 text-xs">{{ $t('basedOnZashboard') }}</span>
         </span>

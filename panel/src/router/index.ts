@@ -108,12 +108,12 @@ const router = createRouter({
   ],
 })
 
-const title = useTitle('Open-Box')
+const title = useTitle('ProxyBox')
 const setTitleByName = (name: string | symbol | undefined) => {
   if (typeof name === 'string') {
-    title.value = `Open-Box | ${i18n.global.t(name)}`
+    title.value = `ProxyBox | ${i18n.global.t(name)}`
   } else {
-    title.value = 'Open-Box'
+    title.value = 'ProxyBox'
   }
 }
 

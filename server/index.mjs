@@ -19,7 +19,7 @@ import { startSchedulers } from './lib/scheduler.mjs'
 import { serviceRouter } from './api/service.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT = path.resolve(__dirname, '..', '..')
+const ROOT = path.resolve(__dirname, '..')
 const paths = resolvePaths(process.env.PROXYBOX_ROOT || ROOT)
 fs.mkdirSync(paths.dataDir, { recursive: true })
 
@@ -58,8 +58,10 @@ app.use('/api/openbox/service', serviceRouter(paths))
 app.use('/api/controller', auth.requireAuth, controllerRouter(store))
 
 // --- frontend (built dist if present, otherwise a stub page) ---
-const distDir = path.join(ROOT, 'panel', 'dist')
-if (fs.existsSync(path.join(distDir, 'index.html'))) {
+// Dev layout: <repo>/panel/dist ; installed layout: /opt/proxybox/panel
+const distDir = [path.join(ROOT, 'panel', 'dist'), path.join(ROOT, 'panel')]
+  .find(d => fs.existsSync(path.join(d, 'index.html')))
+if (distDir) {
   app.use(express.static(distDir))
   app.get('*', (_req, res) => res.sendFile(path.join(distDir, 'index.html')))
 } else {

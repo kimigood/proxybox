@@ -10,7 +10,7 @@
 
       <div :class="nodeClasses('hero')">
         <CubeTransparentIcon class="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
-        <span class="font-semibold">Open-Box</span>
+        <span class="font-semibold">ProxyBox</span>
       </div>
 
       <ArrowRightIcon class="text-base-content/25 mx-auto h-4 w-4 shrink-0 rotate-90 sm:mx-1 sm:rotate-0" />
@@ -103,7 +103,7 @@ import {
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-// Presentational only: device -> Open-Box -> decision, pill badges with icon + label, arrows
+// Presentational only: device -> ProxyBox -> decision, pill badges with icon + label, arrows
 // between. Extended here for a linear chain of arbitrary length (rule match -> policy target ->
 // however many clash_api `now` hops -> leaf) rather than a fixed two-branch direct/proxy grid,
 // since a penetration result resolves to exactly one path, not a menu of choices.
