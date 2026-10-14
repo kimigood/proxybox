@@ -113,7 +113,7 @@ const en = {
   autoUpgrade: 'Auto upgrade',
   useServerProxy: 'Use server relay',
   useServerProxyTip:
-    'Let the Open-Box server relay Mihomo/OpenClash API requests so public access does not need direct controller exposure.',
+    'Let the ProxyBox server relay Mihomo/OpenClash API requests so public access does not need direct controller exposure.',
   logRetentionLimit: 'Log retention limit',
   DNSQuery: 'DNS query',
   confirm: 'Confirm',
@@ -545,10 +545,10 @@ const en = {
   dnsModeLabel: 'Takeover mode',
   dnsModeHijack: 'Intercept',
   dnsModeHijackDescription:
-    "Open-Box answers every device's DNS requests directly, whatever server they're configured to use. Simple, and works in most setups.",
+    "ProxyBox answers every device's DNS requests directly, whatever server they're configured to use. Simple, and works in most setups.",
   dnsModeDnsmasq: 'Via dnsmasq',
   dnsModeDnsmasqDescription:
-    "Your router's own dnsmasq keeps answering devices on your network, but its upstream is pointed at Open-Box. Keeps dnsmasq's own local-hostname resolution working; depends on dnsmasq running normally.",
+    "Your router's own dnsmasq keeps answering devices on your network, but its upstream is pointed at ProxyBox. Keeps dnsmasq's own local-hostname resolution working; depends on dnsmasq running normally.",
   ipv6Title: 'IPv6',
   ipv6Description: 'Let IPv6 traffic use the same tunnel and routing rules as IPv4.',
   ipv6OffWarning: "Off: IPv6 traffic is blocked outright so it can't slip out around the tunnel.",
@@ -559,7 +559,7 @@ const en = {
   kernelLoadFailed: "Couldn't load service status: {message}",
   kernelServiceTitle: 'Core & panel service',
   kernelConflictTitle: 'Another proxy service is running',
-  kernelConflictItem: "Stop {name} first — Open-Box refuses to start while it's running.",
+  kernelConflictItem: "Stop {name} first — ProxyBox refuses to start while it's running.",
   kernelVersionLabel: 'Kernel version',
   kernelVersionUnknown: 'Unknown',
   kernelCoreLabel: 'Core',
@@ -585,9 +585,9 @@ const en = {
   kernelEmergencyButton: 'Emergency stop & restore direct connection',
   kernelEmergencyDialogTitle: 'Stop proxying and go direct?',
   kernelEmergencyConsequence: 'This will:',
-  kernelEmergencyConsequenceStop: 'Stop the Open-Box core — no traffic will be proxied anymore.',
+  kernelEmergencyConsequenceStop: 'Stop the ProxyBox core — no traffic will be proxied anymore.',
   kernelEmergencyConsequenceDns: "Restore your router's original DNS settings.",
-  kernelEmergencyConsequenceFirewall: 'Remove the firewall rules Open-Box added.',
+  kernelEmergencyConsequenceFirewall: 'Remove the firewall rules ProxyBox added.',
   kernelEmergencyConfirmCheckbox:
     'I understand this turns off proxying and my connection goes back to plain/direct.',
   kernelEmergencyConfirmButton: 'Yes, stop proxying now',
