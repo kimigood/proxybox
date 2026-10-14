@@ -43,11 +43,12 @@ CHUNKDIR="releases/v$VERSION"
 rm -rf "$CHUNKDIR"
 mkdir -p "$CHUNKDIR"
 base64 -w0 "$TARBALL" | split -b 98304 - "$CHUNKDIR/chunk-"
+# NOTE: compute the chunk list BEFORE creating manifest.txt (redirection
+# creates the file first, so ls inside the block would see it).
+CHUNKS="$(ls "$CHUNKDIR" | tr '\n' ' ')"
 {
   echo "version=$VERSION"
   echo "sha256=$(cat "$TARBALL.sha256")"
-  echo -n "chunks="
-  ls "$CHUNKDIR" | tr '\n' ' '
-  echo
+  echo "chunks=\"$CHUNKS\""
 } > "$CHUNKDIR/manifest.txt"
 echo "[proxybox] release chunks in $CHUNKDIR ($(du -sh "$CHUNKDIR" | cut -f1))"
