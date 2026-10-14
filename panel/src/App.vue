@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, type Ref, watch } from 'vue'
 import { RouterView } from 'vue-router'
+import FloatingStats from './components/FloatingStats.vue'
 import { useKeyboard } from './composables/keyboard'
 import { EMOJIS, FONTS, IS_APPLE_DEVICE } from './constant'
 import { autoImportSettings, importSettingsFromUrl } from './helper/autoImportSettings'
@@ -163,6 +164,7 @@ useKeyboard()
     :style="appStyles"
   >
     <RouterView />
+    <FloatingStats />
     <div
       ref="toast"
       class="toast-sm toast toast-end toast-top z-[100000] max-w-80 text-sm md:max-w-96 md:translate-y-8"

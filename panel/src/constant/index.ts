@@ -242,4 +242,6 @@ export enum OVERVIEW_CARD {
   TopologyCharts = 'TopologyCharts',
   ConnectionHistory = 'ConnectionHistory',
   RuleHitCountCard = 'RuleHitCountCard',
+  SpeedTestCard = 'SpeedTestCard',
+  TrafficInsightCard = 'TrafficInsightCard',
 }

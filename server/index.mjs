@@ -17,6 +17,7 @@ import { deployRouter, penetrationRouter } from './api/deploy.mjs'
 import { controllerRouter, attachControllerWs } from './api/controller.mjs'
 import { startSchedulers } from './lib/scheduler.mjs'
 import { serviceRouter } from './api/service.mjs'
+import { trafficRouter } from './api/traffic.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
@@ -54,6 +55,7 @@ app.use('/api/openbox/groups', groupsRouter(store))
 app.use('/api/openbox/deploy', deployRouter(store, paths))
 app.use('/api/openbox/penetration', penetrationRouter(store, paths))
 app.use('/api/openbox/service', serviceRouter(paths))
+app.use('/api/openbox/traffic', auth.requireAuth, trafficRouter(store))
 // clash_api proxy (HTTP + WS) for the panel's runtime pages
 app.use('/api/controller', auth.requireAuth, controllerRouter(store))
 
@@ -78,7 +80,7 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: String(err.message || err) })
 })
 
-const PORT = Number(process.env.PROXYBOX_PORT || 3036)
+const PORT = Number(process.env.PROXYBOX_PORT || 3037)
 const HOST = process.env.PROXYBOX_HOST || '0.0.0.0'
 const server = app.listen(PORT, HOST, () => {
   console.log(`[proxybox] panel on http://${HOST === '0.0.0.0' ? '<lan-ip>' : HOST}:${PORT}`)

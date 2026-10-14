@@ -1,7 +1,7 @@
 #!/bin/sh
 # ProxyBox installer for OpenWrt (x86_64 / aarch64).
 #
-#   install.sh [--port 3036] [<proxybox-*.tar.gz or URL>]
+#   install.sh [--port 3037] [<proxybox-*.tar.gz or URL>]
 #
 # With no tarball argument it pulls the latest release from GitHub.
 #
@@ -9,7 +9,7 @@
 set -eu
 
 TARBALL=""
-PORT=3036
+PORT=3037
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --port) PORT="${2:?missing port}"; shift 2 ;;

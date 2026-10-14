@@ -121,6 +121,14 @@ export const numberOfChartsInSidebar = useStorage<1 | 2 | 3>(
 )
 const defaultOverviewCardOrder: { card: OVERVIEW_CARD; visible: boolean }[] = [
   {
+    card: OVERVIEW_CARD.SpeedTestCard,
+    visible: true,
+  },
+  {
+    card: OVERVIEW_CARD.TrafficInsightCard,
+    visible: true,
+  },
+  {
     card: OVERVIEW_CARD.ChartsCard,
     visible: true,
   },
@@ -171,6 +179,18 @@ export const twoColumnProxyGroup = useStorage('config/two-columns', true)
 export const speedtestUrl = useStorage<string>('config/speedtest-url', TEST_URL)
 export const independentLatencyTest = useStorage('config/independent-latency-test', false)
 export const speedtestTimeout = useStorage<number>('config/speedtest-timeout', 5000)
+// Panel speed-test sites (overview SpeedTestCard). Editable in panel settings.
+export interface SpeedTestSite {
+  name: string
+  url: string
+}
+export const speedTestSites = useStorage<SpeedTestSite[]>('config/speed-test-sites', [
+  { name: '百度', url: 'https://www.baidu.com/favicon.ico' },
+  { name: 'Google', url: 'https://www.google.com/generate_204' },
+  { name: 'OpenAI', url: 'https://api.openai.com/v1/models' },
+  { name: 'Telegram', url: 'https://telegram.org/favicon.ico' },
+])
+export const autoSpeedTest = useStorage('config/auto-speed-test', false)
 export const proxySortType = useStorage<PROXY_SORT_TYPE>(
   'config/proxy-sort-type',
   PROXY_SORT_TYPE.DEFAULT,

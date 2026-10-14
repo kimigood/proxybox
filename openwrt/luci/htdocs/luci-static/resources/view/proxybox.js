@@ -30,7 +30,7 @@ async function isRunning(script) {
 
 return view.extend({
   render() {
-    const panelUrl = `${location.protocol}//${location.hostname}:3036`;
+    const panelUrl = `${location.protocol}//${location.hostname}:3037`;
     return E('div', { class: 'cbi-map' }, [
       E('h2', {}, _('ProxyBox')),
       E('div', { class: 'cbi-map-descr' }, [

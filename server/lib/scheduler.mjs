@@ -67,5 +67,42 @@ export function startSchedulers(ctx) {
   setTimeout(tick, 60 * 1000)
   const timer = setInterval(tick, TICK_MS)
   timer.unref?.()
-  return { tick, stop: () => clearInterval(timer) }
+
+  // Traffic sampler: every 60s read cumulative counters from the clash API
+  // and accumulate per-day deltas. Silent when the core is unreachable.
+  const TRAFFIC_INTERVAL_MS = 60 * 1000
+  async function sampleTraffic() {
+    try {
+      const secret = store.kvGet('clash.secret') || ''
+      const ctl = new AbortController()
+      const to = setTimeout(() => ctl.abort(), 8000)
+      try {
+        const res = await fetch('http://127.0.0.1:9095/traffic', {
+          headers: { Authorization: `Bearer ${secret}` },
+          signal: ctl.signal,
+        })
+        if (!res.ok || !res.body) return
+        const reader = res.body.getReader()
+        const { value, done } = await reader.read()
+        reader.cancel().catch(() => {})
+        if (done || !value) return
+        const text = new TextDecoder().decode(value)
+        const m = text.match(/\{[^}]*\}/)
+        if (!m) return
+        const { up, down } = JSON.parse(m[0])
+        if (typeof up === 'number' && typeof down === 'number') {
+          store.addTrafficSample(up, down)
+        }
+      } finally {
+        clearTimeout(to)
+      }
+    } catch {
+      // core unreachable — skip silently
+    }
+  }
+  setTimeout(sampleTraffic, 30 * 1000)
+  const trafficTimer = setInterval(sampleTraffic, TRAFFIC_INTERVAL_MS)
+  trafficTimer.unref?.()
+
+  return { tick, stop: () => { clearInterval(timer); clearInterval(trafficTimer) } }
 }

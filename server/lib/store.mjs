@@ -77,6 +77,10 @@ export function openStore(dataDir) {
       all_nodes INTEGER NOT NULL DEFAULT 0, members TEXT,
       interval TEXT, tolerance REAL
     );
+    CREATE TABLE IF NOT EXISTS traffic_daily (
+      day TEXT PRIMARY KEY, up INTEGER NOT NULL DEFAULT 0,
+      down INTEGER NOT NULL DEFAULT 0, conns INTEGER NOT NULL DEFAULT 0
+    );
   `)
 
   const kvGet = (key) => {
@@ -208,6 +212,40 @@ export function openStore(dataDir) {
     return s
   }
 
+  // ---- traffic sampling (daily up/down bytes + connection count) ----
+  // The clash API reports cumulative counters; we store per-sample deltas.
+  function addTrafficSample(upTotal, downTotal) {
+    const last = kvGetJson('traffic.last', null)
+    const now = new Date()
+    const day = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+    if (last && typeof last.up === 'number' && typeof last.down === 'number') {
+      const dup = Math.max(0, upTotal - last.up)
+      const ddown = Math.max(0, downTotal - last.down)
+      if (dup > 0 || ddown > 0) {
+        db.prepare(
+          `INSERT INTO traffic_daily (day, up, down, conns) VALUES (?, ?, ?, 1)
+           ON CONFLICT(day) DO UPDATE SET up = up + excluded.up, down = down + excluded.down, conns = conns + 1`,
+        ).run(day, dup, ddown)
+      }
+    } else {
+      // First sample ever (or counters reset): ensure today's row exists.
+      db.prepare('INSERT INTO traffic_daily (day, up, down, conns) VALUES (?, 0, 0, 0) ON CONFLICT(day) DO NOTHING').run(day)
+    }
+    kvSet('traffic.last', JSON.stringify({ up: upTotal, down: downTotal, at: Date.now() }))
+  }
+  function getTrafficMonth(month) {
+    // month: 'YYYY-MM'
+    const rows = db.prepare(
+      "SELECT day, up, down, conns FROM traffic_daily WHERE day LIKE ? ORDER BY day",
+    ).all(`${month}-%`)
+    const days = rows.map((r) => ({ day: r.day, up: r.up, down: r.down, conns: r.conns }))
+    const totalUp = days.reduce((a, d) => a + d.up, 0)
+    const totalDown = days.reduce((a, d) => a + d.down, 0)
+    const totalConns = days.reduce((a, d) => a + d.conns, 0)
+    const avgPerDay = days.length ? Math.round((totalUp + totalDown) / days.length) : 0
+    return { month, days, totalUp, totalDown, totalConns, avgPerDay }
+  }
+
   return {
     db,
     kvGet, kvSet, kvGetJson,
@@ -215,6 +253,7 @@ export function openStore(dataDir) {
     listSubscriptions, getSubscription, getSubscriptionNodes, saveSubscription, deleteSubscription, allNodes,
     listGroups, replaceGroups,
     getDeployState, setDeployState,
+    addTrafficSample, getTrafficMonth,
     close() { db.close() },
   }
 }

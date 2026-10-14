@@ -84,6 +84,41 @@
         </select>
       </div>
     </div>
+    <!-- speed test sites -->
+    <div class="settings-title pt-4">
+      {{ $t('speedTestSites') }}
+    </div>
+    <div class="flex flex-col gap-2">
+      <div
+        v-for="(site, i) in speedTestSites"
+        :key="i"
+        class="flex items-center gap-2"
+      >
+        <input
+          v-model="site.name"
+          class="input input-sm w-28"
+          :placeholder="$t('siteName')"
+        />
+        <input
+          v-model="site.url"
+          class="input input-sm flex-1"
+          placeholder="https://"
+        />
+        <button
+          class="btn btn-ghost btn-sm"
+          :disabled="speedTestSites.length <= 1"
+          @click="speedTestSites.splice(i, 1)"
+        >
+          ✕
+        </button>
+      </div>
+      <button
+        class="btn btn-sm btn-outline w-fit"
+        @click="speedTestSites.push({ name: '', url: 'https://' })"
+      >
+        + {{ $t('addSite') }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -96,6 +131,7 @@ import {
   autoIPCheck,
   numberOfChartsInSidebar,
   showStatisticsWhenSidebarCollapsed,
+  speedTestSites,
   splitOverviewPage,
 } from '@/store/settings'
 import OverviewCard from './OverviewCard.vue'

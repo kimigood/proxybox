@@ -771,3 +771,64 @@ div::-webkit-scrollbar-thumb:hover {
     }
   }
 }
+
+/* ============ P0 warm theme: gradient app background + glass cards ============ */
+/* Light: cream -> peach warm gradient. Dark: deep warm charcoal. */
+#app-content:not(.custom-background) {
+  background: linear-gradient(135deg, #fffaf3 0%, #fff3e6 38%, #ffe8d6 72%, #ffdfc9 100%) !important;
+}
+body[data-theme*='dark'] #app-content:not(.custom-background) {
+  background: linear-gradient(135deg, #171310 0%, #1f1813 45%, #2a1e15 100%) !important;
+}
+
+/* Glassmorphism cards */
+#app-content .card {
+  background-color: color-mix(in srgb, #ffffff 62%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  box-shadow:
+    0 10px 32px rgba(190, 130, 85, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  border-radius: 20px !important;
+}
+body[data-theme*='dark'] #app-content .card {
+  background-color: color-mix(in srgb, #3a2f26 55%, transparent) !important;
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+/* Glass sidebar */
+#app-content .sidebar {
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.72), rgba(255, 238, 222, 0.55)) !important;
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+}
+body[data-theme*='dark'] #app-content .sidebar {
+  background: linear-gradient(180deg, rgba(38, 29, 22, 0.78), rgba(30, 23, 18, 0.62)) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Warm accent for active nav item */
+#app-content .sidebar .menu li > a.menu-active {
+  background: linear-gradient(135deg, #ff9a5c, #ff7e3d) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 126, 61, 0.35);
+}
+
+/* Warm page titles */
+.pb-warm-title {
+  background: linear-gradient(120deg, #b3541e, #e07b39);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+body[data-theme*='dark'] .pb-warm-title {
+  background: linear-gradient(120deg, #ffb37e, #ff8a4d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

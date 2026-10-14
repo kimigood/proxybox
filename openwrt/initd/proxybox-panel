@@ -10,7 +10,7 @@ NODE_BIN="$ROOT/node/bin/node"
 
 start_service() {
   [ -n "$NODE_BIN" ] || { echo "node not found" >&2; return 1; }
-  local port="3036"
+  local port="3037"
   [ -f "$ROOT/data/panel-port" ] && port="$(cat "$ROOT/data/panel-port")"
   procd_open_instance
   procd_set_param command "$NODE_BIN" "$ROOT/server/index.mjs"

@@ -57,7 +57,7 @@ proxybox/
 ```bash
 cd server && npm install
 node smoke.mjs        # 冒烟测试：解析 -> 重命名 -> 生成配置 -> HTTP API
-PROXYBOX_PORT=3036 node index.mjs
+PROXYBOX_PORT=3037 node index.mjs
 ```
 
 ## 路线图
@@ -84,7 +84,7 @@ curl -fsSL https://raw.githubusercontent.com/kimigood/proxybox/main/scripts/inst
 
 这条命令会：装依赖（kmod-tun、ca-bundle）→ 从 GitHub Releases 拉取最新安装包 →
 解包到 /opt/proxybox → 下载 Node.js 与 sing-box 1.13.14 → 装服务脚本与 LuCI 兜底页 →
-启动面板。之后浏览器打开 `http://<路由器IP>:3036`，首次设置密码，添加订阅，
+启动面板。之后浏览器打开 `http://<路由器IP>:3037`，首次设置密码，添加订阅，
 点"部署"即完成。
 
 手动安装（已下载 tarball）：
